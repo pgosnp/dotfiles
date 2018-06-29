@@ -1,0 +1,324 @@
+﻿" Basic setting {
+set nocompatible   " 關閉兼容模式   
+set number         " 顯示行號
+set relativenumber " 開啟相對行號
+set backspace=2    " 設置退格鍵可用
+set ruler          " 右下角顯示光標位置的狀態行
+set autoindent     " 自動對齊
+set smartindent    " 智能對齊
+syntax enable      " 打開語法高亮
+syntax on          " 開啟文件類型偵測      
+set tabstop=4      " 設置tab的跳數   
+set mouse=a        " 設置在任何模式下鼠標都可用
+set hlsearch       " 高亮顯示查找結果
+set incsearch      " 輸入搜索內容時就顯示搜索結果   
+set shiftwidth=4   " 換行時，交錯使用4個空格
+set foldmethod=indent  " Enable folding
+set foldlevel=99
+let g:pymode_python = 'python3'
+"工作目錄隨文件變
+" autocmd BufEnter * cd %:p:h
+"設置字體為Monofur_for_Powerline，大小12
+"set guifont=Inconsolata-g_for_Powerline:h12:b:cDEFAULT
+set guifont=Monofur_for_Powerline:h12:b:cDEFAULT  
+" filetype off      
+set showcmd
+set cindent shiftwidth=4
+set autochdir
+" cd to ShInG
+nnoremap <F1> :cd C:\Users\ShInG\Documents\cpp<CR> 
+nnoremap <F2> :cd~<CR> 
+nnoremap <F3> :FZF<CR>
+nnoremap <F12> :cd C:\Users\ShInG\Documents\workspace\Python<CR> 
+nnoremap <space> za " Enable folding with the spacebar
+let g:mapleader = "<Space>"
+
+
+" 使用GUI界面時的設置
+set guioptions-=m  " 隱藏菜單欄
+set guioptions-=T  " 隱藏工具欄
+set guioptions-=L  " 隱藏左側滾動條
+set guioptions-=r  " 隱藏右側滾動條
+set guioptions-=b  " 隱藏底部滾動條    
+set showtabline=0  " 隱藏Tab欄
+set cursorline     " 高亮突出當前行
+set lines=50 columns=150
+set background=dark
+colorscheme Tomorrow-Night
+
+" vim的菜單亂碼解決
+source $VIMRUNTIME/delmenu.vim
+source $VIMRUNTIME/menu.vim
+
+"vim提示信息亂碼的解決
+language messages zh_CN.utf-8
+
+" 設置文件的代碼形式 utf8
+set encoding=utf-8
+set termencoding=utf-8
+set fileencoding=utf-8
+set langmenu=zh_CN.UTF-8
+" :e ++enc=big5 在文件中輸入該命令便會變回BIG5
+nnoremap <F9> :e ++enc=big5<CR> 
+set fileencodings=utf-8,gb2312,gb18030,gbk,ucs-bom,cp936,latin1
+set enc=utf8
+set fencs=utf8,gbk,gb2312,gb18030
+setglobal fileencoding=utf-8
+
+" }
+
+" Compile and run file {
+
+autocmd filetype python nnoremap <F5> :w <bar> exec '!python ' shellescape('%')<CR>
+autocmd FileType java nnoremap <F5> :w <bar> exec '!javac ' shellescape('%') ' && java' shellescape('%')<cr>
+autocmd filetype c nnoremap <F5> :w <bar> exec '!gcc ' shellescape('%') ' -o ' shellescape('%:r') ' && ' shellescape('%:r')<CR>
+autocmd filetype cpp nnoremap <F5> :w <bar> exec '!g++ ' shellescape('%') ' -o ' shellescape('%:r') ' && ' shellescape('%:r')<CR>
+
+" }
+
+" 映射複製、粘貼、剪貼、全選、保存、撤銷 {
+
+map <C-V> "+pa<Esc>
+map! <C-V> <Esc>"+pa
+map <C-C> "+y
+map <C-X> "+x
+map <C-A> ggVG
+map! <C-A> <Esc>ggVG
+map <C-S> :w<CR>
+inoremap <C-S> <C-O>:w<CR>
+map <C-Z> :u<CR>
+map! <C-Z> <C-O>:u<CR>
+
+" }
+
+" Tab頁面function {
+
+map     <C-T>       :tabnew<CR>
+noremap <leader>1 1gt
+noremap <leader>2 2gt
+noremap <leader>3 3gt
+noremap <leader>4 4gt
+noremap <leader>5 5gt
+noremap <leader>6 6gt
+noremap <leader>7 7gt
+noremap <leader>8 8gt
+noremap <leader>9 9gt
+noremap <leader>0 :tablast<CR>
+nnoremap <C-Left> :tabprevious<CR>
+nnoremap <C-Right> :tabnext<CR>
+
+" }
+
+" Vundle插件管理 {
+
+source $VIMRUNTIME/menu.vim
+source $VIMRUNTIME/delmenu.vim
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'junegunn/vim-easy-align'
+Plugin 'scrooloose/nerdtree'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'honza/vim-snippets'
+Plugin 'SirVer/ultisnips'
+Plugin 'easymotion/vim-easymotion'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'rking/ag.vim'
+Plugin 'aperezdc/vim-template'
+Plugin 'Chiel92/vim-autoformat'
+Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'junegunn/fzf'
+Plugin 'vim-syntastic/syntastic'
+Plugin 'luochen1990/rainbow'
+Plugin 'jiangmiao/auto-pairs'
+
+call vundle#end()         
+filetype plugin indent on " 啟用自動補全
+
+" }
+
+" EasyAlign {
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+" }
+
+" NERDTree {
+
+let NERDTreeWinSize=25
+map <C-e> :NERDTreeToggle<CR>
+let g:NERDTreeShowLineNumbers=1
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" 顯示書籤列表
+let NERDTreeShowBookmarks = 1
+
+" }
+
+" Easy-motion {
+
+" 更改快捷键
+map f <Plug>(easymotion-prefix)
+map ff <Plug>(easymotion-s)
+map fs <Plug>(easymotion-f)
+map fl <Plug>(easymotion-lineforward)
+map fj <Plug>(easymotion-j)
+map fk <Plug>(easymotion-k)
+map fh <Plug>(easymotion-linebackward)
+" 忽略大小寫
+let g:EasyMotion_smartcase = 1
+" using '/' to find n-char
+nmap s <Plug>(easymotion-s2)
+nmap t <Plug>(easymotion-t2)
+map  / <Plug>(easymotion-sn) 
+omap / <Plug>(easymotion-tn)
+map  n <Plug>(easymotion-next)
+map  N <Plug>(easymotion-prev)
+
+" }
+
+" Airline {
+
+set laststatus=2
+let g:airline_theme='tomorrow'
+let g:airline_powerline_fonts = 1
+if !exists('g:airline_symbols')
+	let g:airline_symbols = {}
+endif
+" enable tabline
+let g:airline#extensions#tabline#enabled = 1
+" set left separator
+let g:airline#extensions#tabline#left_sep = ' '
+" set left separator which are not editting
+let g:airline#extensions#tabline#left_alt_sep = '|'
+" show buffer number
+let g:airline#extensions#tabline#buffer_nr_show = 1
+
+" }
+
+" Ale {
+
+" let g:ale_emit_conflict_warnings = 0
+let g:ale_sign_column_always = 1
+let g:ale_sign_error = '>>'
+let g:ale_sign_warning = '--'
+let g:ale_open_list = 1
+
+" }
+
+" YouCompleteMe {
+
+"尋找全局配置文件
+let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+let g:ycm_min_num_of_chars_for_completion=1
+let g:ycm_show_diagnostics_ui = 0
+let g:syntastic_always_populate_loc_list = 1
+let g:ycm_use_ultisnips_completer=1
+"開啟語義補全
+let g:ycm_seed_identifiers_with_syntax = 1
+"在註釋輸入中也能補全
+let g:ycm_complete_in_comments = 1
+"在字符串輸入中也能補全
+let g:ycm_complete_in_strings = 1
+"設置在下面幾種格式的文件上屏蔽ycm
+let g:ycm_filetype_blacklist = {
+      \ 'tagbar' : 1,
+      \ 'nerdtree' : 1,
+      \}
+
+" }
+
+" CtrlP {
+" let g:ctrlp_map = '<c-p>' 
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_working_path_mode = 'ra'
+map <leader>f :CtrlPMRU<CR>
+let g:ctrlp_working_path_mode = 0
+let g:ctrlp_match_window_bottom=1
+let g:ctrlp_max_height=15
+let g:ctrlp_match_window_reversed=0
+let g:ctrlp_mruf_max=500
+let g:ctrlp_follow_symlinks=1
+let g:ctrlp_custom_ignore = {
+    \ 'dir':  '\v[\/]\.(git|hg|svn|rvm)$',
+    \ 'file': '\v\.(exe|so|dll|zip|tar|tar.gz|pyc)$',
+    \ }
+
+" }
+
+" UltiSnips {
+
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<C-r>"
+let g:UltiSnipsJumpForwardTrigger="<C-j>"
+let g:UltiSnipsJumpBackwardTrigger="<C-k>"
+let g:UltiSnipsListSnippets="<C-l>"
+"定義存放代碼片段的文件夾，使用自定義和默認的，將會的到全局，有衝突的會提示
+let g:UltiSnipsSnippetDirectories=["bundle/vim-snippets/UltiSnips"]
+let g:UltiSnipsEditSplit="vertical"
+
+" }
+
+" Autoformat {
+
+noremap <F4> :Autoformat<CR>
+
+" }
+
+" Cpp-enhanced-highlight {
+
+let g:cpp_class_scope_highlight = 1
+let g:cpp_member_variable_highlight = 1
+let g:cpp_experimental_simple_template_highlight = 1
+let g:cpp_concepts_highlight = 1
+
+" }
+
+" fzf {
+
+nmap <C-p> <plug>(fzf-complete-file-ag)
+"nmap <C-p> <plug>(fzf-complete-path)
+" nmap <leader><g> <plug>(fzf-maps-n)
+let g:fzf_history_dir = '~/.local/share/fzf-history'
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
+" }
+
+" Syntastic {
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+" let g:syntastic_cpp_compiler = 'g++'
+" let g:syntastic_cpp_compiler = 'clang++'
+let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libc++'
+
+" }
+
+" Rainbow {
+
+let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
+
+" }
